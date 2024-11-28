@@ -1,0 +1,258 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5fe;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+}
+
+.header input {
+    width: 500px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.headline p {
+        text-align: center;
+        font-family: 'PT Serif';
+        font-weight: 700;
+        font-size: 40px;
+        color: #000000;
+}
+/* form */
+* {
+    box-sizing: border-box;
+  }
+  
+  form {
+    padding: 1em;
+    background: #e8f5fe;
+    /* border: 1px solid #c1c1c1; */
+    /* margin-top: 2rem; */
+    max-width: 600px;
+    /* margin-left: auto;
+    margin-right: auto; */
+    padding: 1em;
+  }
+  form input {
+    margin-bottom: 1rem;
+    background: #f0f9ff;
+    border: 1px solid #9c9c9c;
+  }
+  form button {
+    background: lightgrey;
+    padding: 0.7em;
+    border: 0;
+  }
+  form button:hover {
+    background: gold;
+  }
+  
+  label {
+    text-align: right;
+    display: block;
+    padding: 0.5em 1.5em 0.5em 0;
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.7em;
+    margin-bottom: 0.5rem;
+  }
+  input:focus {
+    outline: 3px solid gold;
+  }
+  
+  @media (min-width: 400px) {
+    form {
+      overflow: hidden;
+    }
+  
+    label {
+      float: left;
+      width: 200px;
+    }
+  
+    input {
+      float: left;
+      width: calc(100% - 200px);
+    }
+  
+    button {
+      float: right;
+      width: calc(100% - 200px);
+    }
+  }
+
+.vertical {
+    position: absolute;
+    width: 2px;
+    height: 400px;
+    background-color: #000;
+    margin: 0 auto;
+    transform: rotate(360deg);
+    align-content: center;
+    top: 209px;
+    left: 784px;
+  }
+
+  .result-text {
+    position: absolute; 
+    top: 165px; 
+    left: 1108px; 
+    width: 93px; 
+    height: 36px; 
+    text-align: center; 
+    line-height: 36px; 
+    font-family: 'Inter';
+    color: #000;
+    font-weight: bold;
+    font-size: 30px;
+  }  
+
+@property --p{
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+    }
+
+    .pie {
+        --p: 20; /* Persentase luas yang ingin ditampilkan dalam pie chart */
+        --b: 22px;
+        --c: darkred;
+        --w: 180px;
+        --h: 170px; /* Lebar dan tinggi pie chart */
+        --l: 1075px; /* Left (horizontal) position */
+        --t: 303px; /* Top (vertical) position */
+        
+        width: var(--w);
+        height: var(--h); /* Menambahkan properti height */
+        aspect-ratio: 1;
+        position: absolute; /* Mengubah posisi menjadi absolute */
+        left: var(--l); /* Menambahkan posisi horizontal */
+        top: var(--t); /* Menambahkan posisi vertikal */
+        display: inline-grid;
+        place-content: center;
+        font-size: 25px;
+        font-weight: bold;
+        font-family: sans-serif;
+      }
+      
+      .pie:before,
+      .pie:after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+      }
+      
+      .pie:before {
+        inset: 0;
+        background:
+          radial-gradient(farthest-side, var(--c) 98%, #0000) top / var(--b) var(--b) no-repeat,
+          conic-gradient(var(--c) calc(var(--p) * 1%), #0000 0);
+        -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+        mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+      }
+      
+      .pie:after {
+        inset: calc(50% - var(--b)/2);
+        background: var(--c);
+        transform: rotate(calc(var(--p) * 3.6deg)) translateY(calc(50% - var(--h)/2)); 
+      }
+      
+      .animate {
+        animation: p 1s .5s both;
+      }
+      
+      .no-round:before {
+        background-size: 0 0, auto;
+      }
+      
+      .no-round:after {
+        content: none;
+      }
+      
+      @keyframes p {
+        from { --p: 0 }
+      }
+      
+
+    /* .pie {
+    --p:20;
+    --b:22px;
+    --c:darkred;
+    --w:150px;
+    
+    width:var(--w);
+    aspect-ratio:1;
+    position:relative;
+    display:inline-grid;
+    margin:5px;
+    place-content:center;
+    font-size:25px;
+    font-weight:bold;
+    font-family:sans-serif;
+    }
+
+    .pie:before,
+    .pie:after {
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    }
+
+    .pie:before {
+    inset:0;
+    background:
+        radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+        conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+    -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+            mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+    }
+
+    .pie:after {
+    inset:calc(50% - var(--b)/2);
+    background:var(--c);
+    transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+    }
+
+    .animate {
+    animation:p 1s .5s both;
+    }
+
+    .no-round:before {
+    background-size:0 0,auto;
+    }
+
+    .no-round:after {
+    content:none;
+    }
+    
+    @keyframes p {
+    from{--p:0}
+    } */
+  

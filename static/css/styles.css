@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5fe;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header input {
+    width: 500px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.card h2 {
+    margin: 0;
+}
+
+.card .value {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.card .status {
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+.status.good {
+    background-color: #28a745;
+    color: white;
+}
+
+.status.moderate {
+    background-color: #ffc107;
+    color: white;
+}
+
+.status.bad {
+    background-color: red;
+    color: white;
+}
+
+.chart {
+    margin-top: 30px;
+}
+
+canvas {
+    width: 100%;
+    height: 400px;
+}

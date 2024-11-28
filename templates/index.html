@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card h5 {
+            font-weight: bold;
+        }
+        .card h3 {
+            font-size: 2em;
+        }
+        .status-good {
+            color: green;
+        }
+        .status-moderate {
+            color: orange;
+        }
+        .status-bad {
+            color: red;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center header">
+                <h1>Sensor Dashboard</h1>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>Temperature</h5>
+                    <h3 id="temp-value">0</h3>
+                    <span id="temp-status" class="status-good">Good</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>Humidity</h5>
+                    <h3 id="humidity-value">0</h3>
+                    <span id="humidity-status" class="status-good">Good</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>Gas</h5>
+                    <h3 id="gas-value">0</h3>
+                    <span id="gas-status" class="status-good">Good</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>PM10</h5>
+                    <h3 id="pm10-value">0</h3>
+                    <span id="pm10-status" class="status-good">Good</span>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>SO2</h5>
+                    <h3 id="so2-value">0</h3>
+                    <span id="so2-status" class="status-good">Good</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>NO2</h5>
+                    <h3 id="no2-value">0</h3>
+                    <span id="no2-status" class="status-good">Good</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>O3</h5>
+                    <h3 id="o3-value">0</h3>
+                    <span id="o3-status" class="status-good">Good</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3">
+                    <h5>CO</h5>
+                    <h3 id="co-value">0</h3>
+                    <span id="co-status" class="status-good">Good</span>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3 col-sm-6 mx-auto">
+                <div class="card p-3">
+                    <h5>Air Quality</h5>
+                    <h3 id="air-quality-category">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <canvas id="historical-chart"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 footer">
+                &copy; 2024 Sensor Dashboard
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the chart
+        const ctx = document.getElementById('historical-chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Temperature',
+                        data: [],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Gas',
+                        data: [],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'PM10',
+                        data: [],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Humidity',
+                        data: [],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Function to update dashboard values and status
+        function updateDashboard(data) {
+            document.getElementById('temp-value').innerText = data.temperature;
+            document.getElementById('humidity-value').innerText = data.humidity;
+            document.getElementById('gas-value').innerText = data.mq2_value;
+            document.getElementById('pm10-value').innerText = data.pm10;
+            document.getElementById('so2-value').innerText = data.so2;
+            document.getElementById('no2-value').innerText = data.no2;
+            document.getElementById('o3-value').innerText = data.o3;
+            document.getElementById('co-value').innerText = data.co;
+            document.getElementById('air-quality-category').innerText = data.air_quality_category;
+
+            updateStatus('temp-status', data.temperature, 18, 32);
+            updateStatus('humidity-status', data.humidity, 30, 70);
+            updateStatus('gas-status', data.mq2_value, 0, 8000);
+            updateStatus('pm10-status', data.pm10, 0, 150);
+            updateStatus('so2-status', data.so2, 0, 150);
+            updateStatus('no2-status', data.no2, 0, 200);
+            updateStatus('o3-status', data.o3, 0, 180);
+            updateStatus('co-status', data.co, 0, 100);
+
+            updateChart(data);
+        }
+
+        // Function to update status based on value thresholds
+        function updateStatus(elementId, value, low, high) {
+            const element = document.getElementById(elementId);
+            if (value < low) {
+                element.classList.remove('status-moderate', 'status-bad');
+                element.classList.add('status-good');
+                element.innerText = 'Good';
+            } else if (value > high) {
+                element.classList.remove('status-good', 'status-moderate');
+                element.classList.add('status-bad');
+                element.innerText = 'Bad';
+            } else {
+                element.classList.remove('status-good', 'status-bad');
+                element.classList.add('status-moderate');
+                element.innerText = 'Moderate';
+            }
+        }
+
+        // Function to fetch data from server
+        function fetchData() {
+            fetch('/realtime-data')
+                .then(response => response.json())
+                .then(data => {
+                    updateDashboard(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Function to update the chart with new data
+        function updateChart(data) {
+            const currentTime = new Date().toLocaleTimeString();
+
+            // Add new data points to the chart
+            chart.data.labels.push(currentTime);
+            chart.data.datasets[0].data.push(data.temperature);
+            chart.data.datasets[1].data.push(data.mq2_value);
+            chart.data.datasets[2].data.push(data.pm10);
+            chart.data.datasets[3].data.push(data.humidity);
+
+            // Remove oldest data points if the length exceeds 20
+            if (chart.data.labels.length > 20) {
+                chart.data.labels.shift();
+                chart.data.datasets.forEach(dataset => dataset.data.shift());
+            }
+
+            chart.update();
+        }
+
+        // Fetch data every 2 seconds
+        setInterval(fetchData, 2000);
+    </script>
+</body>
+</html>

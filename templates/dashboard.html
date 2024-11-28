@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Gas Leakage Value</th>
+                <th>PM10</th>
+                <th>SO2</th>
+                <th>CO</th>
+                <th>O3</th>
+                <th>NO2</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in data %}
+            <tr>
+                <td>{{ entry['Location'] }}</td>
+                <td>{{ entry['Temperature'] }}</td>
+                <td>{{ entry['Humidity'] }}</td>
+                <td>{{ entry['Gas Leakage Value'] }}</td>
+                <td>{{ entry['PM10'] }}</td>
+                <td>{{ entry['SO2'] }}</td>
+                <td>{{ entry['CO'] }}</td>
+                <td>{{ entry['O3'] }}</td>
+                <td>{{ entry['NO2'] }}</td>
+                <td>{{ entry['Timestamp'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
