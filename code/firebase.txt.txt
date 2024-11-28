@@ -1,0 +1,5 @@
+https://air-quality-732f8-default-rtdb.firebaseio.com/
+
+project id : air-quality-732f8
+
+web api key : AIzaSyAz56HKM6zZYCiVK59D90COwOzpxp6bcio
